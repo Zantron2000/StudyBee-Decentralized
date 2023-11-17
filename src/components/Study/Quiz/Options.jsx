@@ -4,6 +4,77 @@ import QuizManager from "../../../utils/Managers/QuizManager";
 
 function Options({ options, setOptions, setOpenOptions, size }) {
     const [tempOptions, setTempOptions] = useState(options);
+    const [visability, setVisability] = useState({
+        types: 'invisible',
+        size: 'invisible'
+    });
+
+    const updateOptions = (event) => {
+        event.preventDefault();
+        let valid = true;
+        const tempVisability = { ...visability };
+        const { types, size } = tempOptions;
+
+        if (types.length === 0) {
+            tempVisability.types = 'visible';
+            valid = false;
+        } else {
+            tempVisability.types = 'invisible';
+        }
+        if (size < 1 || size > size) {
+            tempVisability.size = 'visible';
+            valid = false;
+        } else {
+            tempVisability.size = 'invisible';
+        }
+
+        if (valid) {
+            setOptions(tempOptions);
+            setOpenOptions(false);
+        } else {
+            setVisability(tempVisability);
+        }
+    }
+
+    const changeTypes = (event) => {
+        const { value, checked } = event.target;
+        const { types } = tempOptions;
+
+        if (checked) {
+            const typesSet = new Set([...types, value]);
+
+            setTempOptions({
+                ...tempOptions,
+                types: [...typesSet]
+            });
+        } else {
+            const newTypes = types.filter(type => type !== value);
+            setTempOptions({
+                ...tempOptions,
+                types: newTypes
+            });
+        }
+    };
+
+    const changeAsk = (event) => {
+        const { value } = event.target;
+
+        setTempOptions({
+            ...tempOptions,
+            ask: value
+        });
+    };
+
+    const changeSize = (event) => {
+        const { value } = event.target;
+
+        if (1 <= value && value <= size) {
+            setTempOptions({
+                ...tempOptions,
+                size: value
+            });
+        }
+    };
 
     return (
         <div className="w-screen h-screen flex justify-center items-center absolute top-0 left-0 bg-black/50">
@@ -24,18 +95,20 @@ function Options({ options, setOptions, setOpenOptions, size }) {
                         </div>
                     </div>
                     <form>
-                        <div>
-                            <div>
+                        <div className="border-b">
+                            <div className="py-2 text-xl">
                                 Question Types
                             </div>
-                            <div>
+                            <div className="py-2 space-y-2 text-lg px-4">
                                 <div>
                                     <input
                                         type="checkbox"
                                         id={QuizManager.MULTIPLE_CHOICE}
                                         name='types'
                                         value={QuizManager.MULTIPLE_CHOICE}
-                                        defaultChecked={tempOptions.types.includes(QuizManager.MULTIPLE_CHOICE)}
+                                        checked={tempOptions.types.includes(QuizManager.MULTIPLE_CHOICE)}
+                                        className='mx-2'
+                                        onChange={changeTypes}
                                     />
                                     <label htmlFor={QuizManager.MULTIPLE_CHOICE}>Multiple Choice</label>
                                 </div>
@@ -45,7 +118,9 @@ function Options({ options, setOptions, setOpenOptions, size }) {
                                         id={QuizManager.TRUE_FALSE}
                                         name='types'
                                         value={QuizManager.TRUE_FALSE}
-                                        defaultChecked={tempOptions.types.includes(QuizManager.TRUE_FALSE)}
+                                        checked={tempOptions.types.includes(QuizManager.TRUE_FALSE)}
+                                        className='mx-2'
+                                        onChange={changeTypes}
                                     />
                                     <label htmlFor={QuizManager.TRUE_FALSE}>True/False</label>
                                 </div>
@@ -55,7 +130,9 @@ function Options({ options, setOptions, setOpenOptions, size }) {
                                         id={QuizManager.MATCHING}
                                         name='types'
                                         value={QuizManager.MATCHING}
-                                        defaultChecked={tempOptions.types.includes(QuizManager.MATCHING)}
+                                        checked={tempOptions.types.includes(QuizManager.MATCHING)}
+                                        className='mx-2'
+                                        onChange={changeTypes}
                                     />
                                     <label htmlFor={QuizManager.MATCHING}>Matching</label>
                                 </div>
@@ -65,17 +142,20 @@ function Options({ options, setOptions, setOpenOptions, size }) {
                                         id={QuizManager.SHORT_ANSWER}
                                         name='types'
                                         value={QuizManager.SHORT_ANSWER}
-                                        defaultChecked={tempOptions.types.includes(QuizManager.SHORT_ANSWER)}
+                                        checked={tempOptions.types.includes(QuizManager.SHORT_ANSWER)}
+                                        className='mx-2'
+                                        onChange={changeTypes}
                                     />
                                     <label htmlFor={QuizManager.SHORT_ANSWER}>Short Answer</label>
                                 </div>
+                                <div className={`text-[#ff0000] ${visability.types}`}>At least one option needs to be selected</div>
                             </div>
                         </div>
-                        <div>
-                            <div>
+                        <div className="border-b">
+                            <div className="py-2 text-xl">
                                 Ask
                             </div>
-                            <div>
+                            <div className="py-2 space-y-2 text-lg px-4">
                                 <div>
                                     <input
                                         type="radio"
@@ -83,6 +163,8 @@ function Options({ options, setOptions, setOpenOptions, size }) {
                                         name="ask"
                                         value={QuizManager.BOTH}
                                         defaultChecked={tempOptions.ask === QuizManager.BOTH}
+                                        className='mx-2'
+                                        onChange={changeAsk}
                                     />
                                     <label htmlFor={QuizManager.BOTH}>Both</label>
                                 </div>
@@ -93,6 +175,8 @@ function Options({ options, setOptions, setOpenOptions, size }) {
                                         name="ask"
                                         value={QuizManager.DEFINITION}
                                         defaultChecked={tempOptions.ask === QuizManager.DEFINITION}
+                                        className='mx-2'
+                                        onChange={changeAsk}
                                     />
                                     <label htmlFor={QuizManager.DEFINITION}>Definitions</label>
                                 </div>
@@ -103,30 +187,36 @@ function Options({ options, setOptions, setOpenOptions, size }) {
                                         name="ask"
                                         value={QuizManager.TERM}
                                         defaultChecked={tempOptions.ask === QuizManager.TERM}
+                                        className='mx-2'
+                                        onChange={changeAsk}
                                     />
                                     <label htmlFor={QuizManager.TERM}>Terms</label>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div>
+                        <div className="border-b">
+                            <div className="py-2 text-xl">
                                 Number of Questions
                             </div>
-                            <div>
+                            <div className="py-2 space-y-2 text-lg px-4">
                                 <input
                                     type="number"
                                     id="number"
                                     name="number"
                                     min={1}
                                     max={size}
-                                    defaultValue={tempOptions.number}
+                                    value={tempOptions.size}
+                                    className="bg-input-background w-full text-white p-2 text-center rounded-lg text-2xl"
+                                    onChange={changeSize}
                                 />
+                                <div className={`text-[#ff0000] ${visability.size}`}>Needs to be between 1 and {size}</div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <button
                     className="w-full bg-primary-button px-2 py-4 rounded-lg hover:bg-primary-button/75"
+                    onClick={updateOptions}
                 >
                     Update Options
                 </button>
