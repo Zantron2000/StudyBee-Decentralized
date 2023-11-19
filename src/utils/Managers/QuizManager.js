@@ -23,7 +23,7 @@ class QuizManager {
             QuizManager.MULTIPLE_CHOICE,
             QuizManager.TRUE_FALSE,
             QuizManager.SHORT_ANSWER,
-            QuizManager.MATCHING
+            // QuizManager.MATCHING
         ],
         ask: QuizManager.BOTH,
     }
@@ -66,9 +66,53 @@ class QuizManager {
         }
     };
 
-    constructor(questions, setQuestions, options, cards) {
+    static getProvided(ask) {
+        return ask === QuizManager.TERM ? 'definition' : 'term';
+    }
+
+    static checkAnswer(question) {
+        const { type } = question;
+        if (type === MultipleChoiceManager.SYMBOL) {
+            return MultipleChoiceManager.checkAnswer(question);
+        } else if (type === TrueFalseManager.SYMBOL) {
+            return TrueFalseManager.checkAnswer(question);
+        } else if (type === ShortAnswerManager.SYMBOL) {
+            return ShortAnswerManager.checkAnswer(question);
+        } else if (type === MatchManager.SYMBOL) {
+            return MatchManager.checkAnswer(question);
+        }
+    }
+
+    static getCorrectAnswer(question) {
+        const { type } = question;
+        if (type === MultipleChoiceManager.SYMBOL) {
+            return MultipleChoiceManager.getCorrectAnswer(question);
+        } else if (type === TrueFalseManager.SYMBOL) {
+            return TrueFalseManager.getCorrectAnswer(question);
+        } else if (type === ShortAnswerManager.SYMBOL) {
+            return ShortAnswerManager.getCorrectAnswer(question);
+        } else if (type === MatchManager.SYMBOL) {
+            return MatchManager.getCorrectAnswer(question);
+        }
+    }
+
+    static getUserAnswer(question) {
+        const { type } = question;
+        if (type === MultipleChoiceManager.SYMBOL) {
+            return MultipleChoiceManager.getUserAnswer(question);
+        } else if (type === TrueFalseManager.SYMBOL) {
+            return TrueFalseManager.getUserAnswer(question);
+        } else if (type === ShortAnswerManager.SYMBOL) {
+            return ShortAnswerManager.getUserAnswer(question);
+        } else if (type === MatchManager.SYMBOL) {
+            return MatchManager.getUserAnswer(question);
+        }
+    }
+
+    constructor(questions, setQuestions, questionNumber, options, cards) {
         this.questions = questions;
         this.setQuestions = setQuestions;
+        this.questionNumber = questionNumber;
         this.options = options;
 
         if (!questions.length) {
@@ -115,6 +159,25 @@ class QuizManager {
 
         const shuffledQuestions = QuizManager.shuffle(tempQuestions);
         this.setQuestions(shuffledQuestions);
+    }
+
+    getQuestion(index) {
+        return this.questions[index];
+    }
+
+    getTotalQuestions() {
+        return this.questions.length;
+    }
+
+    isLastQuestion(index) {
+        return index === this.questions.length - 1;
+    }
+
+    updateAnswer(answer) {
+        const tempQuestions = [...this.questions];
+        tempQuestions[this.questionNumber].answer = answer;
+
+        this.setQuestions(tempQuestions);
     }
 }
 

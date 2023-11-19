@@ -124,7 +124,7 @@ function Options({ options, setOptions, setOpenOptions, size }) {
                                     />
                                     <label htmlFor={QuizManager.TRUE_FALSE}>True/False</label>
                                 </div>
-                                <div>
+                                {/* <div>
                                     <input
                                         type="checkbox"
                                         id={QuizManager.MATCHING}
@@ -135,7 +135,7 @@ function Options({ options, setOptions, setOpenOptions, size }) {
                                         onChange={changeTypes}
                                     />
                                     <label htmlFor={QuizManager.MATCHING}>Matching</label>
-                                </div>
+                                </div> */}
                                 <div>
                                     <input
                                         type="checkbox"

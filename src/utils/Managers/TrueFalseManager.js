@@ -21,6 +21,36 @@ class TrueFalseManager {
 
         return { card, ask, wrongCard, type: TrueFalseManager.SYMBOL };
     }
+
+    static getPossibleAnswer(question) {
+        const { ask, card, wrongCard } = question;
+
+        if (wrongCard) {
+            return wrongCard[ask];
+        }
+
+        return card[ask];
+    }
+
+    static checkAnswer(question) {
+        const { wrongCard, answer } = question;
+        const isTrue = !wrongCard;
+
+        return isTrue === answer;
+    }
+
+    static getCorrectAnswer(question) {
+        const { wrongCard } = question;
+        const isTrue = !wrongCard;
+
+        return `${isTrue}`
+    }
+
+    static getUserAnswer(question) {
+        const { answer } = question;
+
+        return `${answer}`;
+    }
 }
 
 export default TrueFalseManager;
