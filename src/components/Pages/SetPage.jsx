@@ -6,31 +6,17 @@ import MobileHeader from '../MobileHeader';
 import Header from '../Header';
 import Footer from '../Footer';
 import HomeSet from '../HomeSet';
-import LoadScreen from '../LoadScreen';
 import SetManager from '../../utils/SetManager';
 
-function SetPage() {
-    const [set, setSet] = useState(undefined);
+function SetPage({ set, setSet }) {
     const { ssx } = useSSX();
-    const { setHash } = useParams();
-    const location = useLocation();
     const nav = useNavigate();
-    const setManager = new SetManager(ssx, nav);
-
-    useEffect(() => {
-        const loadSet = async () => {
-            const set = await setManager.loadSet(location.state?.set, setHash);
-            setSet(set);
-        };
-
-        loadSet();
-    }, [setHash]);
 
     return (
         <>
             <MobileHeader />
             <Header />
-            {set === undefined ? <LoadScreen /> : <HomeSet set={set} setSet={setSet} />}
+            <HomeSet set={set} setSet={setSet} />
             <Footer />
         </>
     )

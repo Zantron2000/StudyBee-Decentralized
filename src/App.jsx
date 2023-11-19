@@ -60,7 +60,7 @@ const router = createHashRouter([
   },
   {
     path: '/sets/:setHash',
-    element: <LoginPage><SetPage /></LoginPage>,
+    element: <LoginPage><LoadPage><SetPage /></LoadPage></LoginPage>,
     errorElement: <HomePage />,
   },
 ]);

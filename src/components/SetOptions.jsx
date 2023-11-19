@@ -1,7 +1,19 @@
-function SetOptions({ open, setOpen }) {
+import { useParams, useNavigate } from "react-router-dom";
+import NavigationManager from "../utils/Managers/NavigationManager";
+
+function SetOptions({ open, setOpen, manager }) {
+    const { setHash } = useParams();
+    const nav = useNavigate();
+    const navigationManager = new NavigationManager(nav);
+
     if (!open) {
         return null;
     }
+
+    const deleteSet = async () => {
+        await manager.deleteSet(setHash);
+        navigationManager.navigateHome();
+    };
 
     return (
         <div className="fixed bg-black/50 w-screen h-screen z-10 top-0 left-0 flex justify-center items-center">
@@ -12,7 +24,12 @@ function SetOptions({ open, setOpen }) {
                     <button className="bg-secondary-button p-2 rounded-lg" onClick={() => setOpen(false)}>Close</button>
                 </div>
                 <div className="flex flex-col justify-center items-center space-y-4">
-                    <button className="w-[75%] bg-primary-button rounded-lg py-2">Delete Set</button>
+                    <button
+                        className="w-[75%] bg-primary-button rounded-lg py-2"
+                        onClick={deleteSet}
+                    >
+                        Delete Set
+                    </button>
                     <button className="w-[75%] bg-primary-button rounded-lg py-2">Edit Set</button>
                     <button className="w-[75%] bg-primary-button rounded-lg py-2">Export Set</button>
                 </div>
