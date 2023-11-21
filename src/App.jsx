@@ -14,6 +14,7 @@ import HomePage from './components/Pages/HomePage'
 import CreateSetPage from './components/Pages/CreateSetPage';
 import LearnPage from './components/Pages/LearnPage';
 import QuizPage from './components/Pages/QuizPage';
+import EditSetPage from './components/Pages/EditSetPage';
 
 import LoginPage from './components/Middleware/LoginPage';
 import LoadPage from './components/Middleware/LoadPage';
@@ -57,6 +58,10 @@ const router = createHashRouter([
   {
     path: '/sets/:setHash/quiz',
     element: <LoginPage><LoadPage><QuizPage /></LoadPage></LoginPage>,
+  },
+  {
+    path: '/sets/:setHash/edit',
+    element: <LoginPage><LoadPage><EditSetPage /></LoadPage></LoginPage>,
   },
   {
     path: '/sets/:setHash',

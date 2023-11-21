@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import NavigationManager from "../utils/Managers/NavigationManager";
 
-function SetOptions({ open, setOpen, manager }) {
+function SetOptions({ open, setOpen, manager, set }) {
     const { setHash } = useParams();
     const nav = useNavigate();
     const navigationManager = new NavigationManager(nav);
@@ -14,6 +14,10 @@ function SetOptions({ open, setOpen, manager }) {
         await manager.deleteSet(setHash);
         navigationManager.navigateHome();
     };
+
+    const editSet = () => {
+        navigationManager.navigateSetEdit(setHash, { set });
+    }
 
     return (
         <div className="fixed bg-black/50 w-screen h-screen z-10 top-0 left-0 flex justify-center items-center">
@@ -30,7 +34,12 @@ function SetOptions({ open, setOpen, manager }) {
                     >
                         Delete Set
                     </button>
-                    <button className="w-[75%] bg-primary-button rounded-lg py-2">Edit Set</button>
+                    <button
+                        className="w-[75%] bg-primary-button rounded-lg py-2"
+                        onClick={editSet}
+                    >
+                        Edit Set
+                    </button>
                     <button className="w-[75%] bg-primary-button rounded-lg py-2">Export Set</button>
                 </div>
                 <div></div>

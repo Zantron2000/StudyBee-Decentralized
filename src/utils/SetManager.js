@@ -149,7 +149,7 @@ class SetManager {
     }
 
     /**
-     * Gets all generic set info
+     * Gets all generic set info. Returns only unique sets, identified by their hash due to issues with kepler storage
      * 
      * @returns {Promise<KeplerGenericSet[]>} A promise that resolves to an array of general set info
      */
@@ -158,7 +158,11 @@ class SetManager {
             const response = await this.ssx.storage.get(`${SetManager.prefix}${SetManager.sets}`);
 
             if (response.ok) {
-                return response.data.sets;
+                const sets = response.data.sets;
+
+                // Remove duplicates
+                const uniqueSets = sets.filter((set, index) => sets.findIndex(s => s.hash === set.hash) === index);
+                return uniqueSets;
             } else if (response.status === 404) {
                 await this.initializeSets();
                 return [];

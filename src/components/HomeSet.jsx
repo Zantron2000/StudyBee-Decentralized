@@ -140,7 +140,7 @@ function HomeSet({ set, setSet }) {
                     }
                 </div>
             </div>
-            <SetOptions open={openOptions} setOpen={setOpenOptions} manager={setManager} />
+            <SetOptions open={openOptions} setOpen={setOpenOptions} manager={setManager} set={set} />
         </div>
     );
 }

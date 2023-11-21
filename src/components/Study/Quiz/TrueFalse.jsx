@@ -15,8 +15,6 @@ function TrueFalse({ question, manager }) {
         manager.updateAnswer(false);
     }
 
-    console.log(answer === false ? 'bg-black/75' : 'hover:bg-primary-button/75')
-
     return (
         <div className="w-full bg-secondary-background p-4 rounded-lg h-full flex flex-col justify-between min-h-[70vh]">
             <div>

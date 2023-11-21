@@ -24,6 +24,10 @@ class NavigationManager {
     navigateSetFlashcards(hash, state) {
         this.navigator(`/sets/${hash}/flashcards`, { state });
     };
+
+    navigateSetEdit(hash, state) {
+        this.navigator(`/sets/${hash}/edit`, { state });
+    };
 }
 
 export default NavigationManager;
