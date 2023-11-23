@@ -23,13 +23,16 @@ function EditSet({ set, setSet }) {
             title,
             description,
             cards: terms,
+            size: terms.length,
         };
 
-        if (ssxManager.hasSession()) {
-            const hash = await setManager.upsertSet(set);
+        SetManager.addCardIds(tempSet);
 
-            set.hash = hash;
-            navigate(`/sets/${hash}`, { state: { set } });
+        if (ssxManager.hasSession()) {
+            const hash = await setManager.upsertSet(tempSet);
+
+            tempSet.hash = hash;
+            navigate(`/sets/${hash}`, { state: { set: tempSet } });
         }
     };
 
@@ -64,6 +67,9 @@ function EditSet({ set, setSet }) {
         setTerms(newTerms);
     };
 
+
+    console.log('Updated Set', terms)
+
     const deleteCard = (index) => {
         const newTerms = [...terms];
         newTerms.splice(index, 1);
@@ -72,6 +78,7 @@ function EditSet({ set, setSet }) {
             newTerms.push({ term: '', definition: '' });
         }
 
+        console.log('Delete Card', newTerms)
         setTerms(newTerms);
     };
 

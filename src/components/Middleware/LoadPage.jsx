@@ -15,6 +15,7 @@ function LoadPage({ children }) {
     const location = useLocation();
     const nav = useNavigate();
     const setManager = new SetManager(ssx, nav);
+    const locationSet = location.state?.set;
 
     useEffect(() => {
         const loadSet = async () => {
@@ -23,7 +24,7 @@ function LoadPage({ children }) {
         };
 
         loadSet();
-    }, [setHash]);
+    }, [locationSet, setHash]);
 
     const LoadPage = <>
         <MobileHeader />

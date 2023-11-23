@@ -37,7 +37,7 @@ class SetManager {
         this.ssx = ssx;
         this.ssxManager = new SSXManager(ssx);
         this.navigator = new NavigationManager(navigator)
-    };
+    }
 
     /**
      * Generates a hash that composes of random alphanumeric characters
@@ -88,7 +88,7 @@ class SetManager {
         } catch (error) {
             return false;
         }
-    };
+    }
 
     /**
      * Transforms a Study Set to a generic set, so it contains
@@ -142,7 +142,7 @@ class SetManager {
 
             if (!response.ok) {
                 throw new Error("Failed to initialize sets");
-            };
+            }
         } catch (error) {
             console.error(error);
         }
@@ -235,7 +235,7 @@ class SetManager {
             console.error(error);
             return null
         }
-    };
+    }
 
     /**
      * Deletes a set from storage
@@ -256,7 +256,7 @@ class SetManager {
         } catch (error) {
             console.error(error);
         }
-    };
+    }
 
     /**
      * Updates a set in storage
@@ -283,13 +283,15 @@ class SetManager {
             sets: newGeneralSetInfo
         }
 
+        console.log('Updating to', set, sets)
+
         try {
             await this.ssx.storage.put(`${SetManager.prefix}${hash}`, set);
             await this.ssx.storage.put(`${SetManager.prefix}${SetManager.sets}`, sets);
         } catch (error) {
             console.error(error);
         }
-    };
+    }
 
     /**
      * Upserts a set in storage. Updates if the set contains a hash, otherwise adds the set
@@ -304,7 +306,7 @@ class SetManager {
         }
 
         return await this.addSet(set);
-    };
+    }
 
     /**
      * Given the hash, gets a set's generic information and it's specific information,
