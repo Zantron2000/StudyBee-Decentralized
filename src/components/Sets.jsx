@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import SetManager from '../utils/SetManager';
 import SSXManager from '../utils/SSXManager';
+import { drugHippos } from "../utils/tools";
 
 const maxRedAccuracy = 60;
 const maxYellowAccuracy = 85;
@@ -23,28 +24,31 @@ function Sets() {
 
         if (ssxManager.hasSession()) {
             getSets();
-
+        } else {
+            setSets([]);
         }
     }, [ssx?.session()]);
 
     const setCards = sets.map((set, index) => {
         const accuracyColor = set.accuracy >= maxYellowAccuracy ? 'text-[#00FF00]' : set.accuracy >= maxRedAccuracy ? 'text-[#FFFF00]' : 'text-[#FF0000]';
 
-        return <Link key={index} className="w-[75%] md:w-[45%] lg:w-[30%] h-1/4 h-full" to={`/sets/${set.hash}`} state={{ partialSet: set }}>
-            <div className="flex bg-[#292A2D] flex-col p-4 rounded-lg text-lg my-4">
-                <div className="mb-8">
-                    <p>{set.title}</p>
-                </div>
-                <div className="flex flex-row justify-between mt-8">
-                    <div className="p-2 bg-[#D9D9D9] rounded-full text-black">
-                        {set.size} Terms
+        return <div className="w-full flex justify-center items-center">
+            <Link key={index} className="w-[90%] h-1/4 h-full" to={`/sets/${set.hash}`} state={{ partialSet: set }}>
+                <div className="flex bg-[#292A2D] flex-col p-4 rounded-lg text-lg my-4">
+                    <div className="mb-8">
+                        <p>{set.title}</p>
                     </div>
-                    <div className="p-2 bg-[#3C4470] rounded-full">
-                        <span className={accuracyColor}>{set.accuracy}%</span> Accuracy
+                    <div className="flex flex-row justify-between mt-8">
+                        <div className="p-2 bg-[#D9D9D9] rounded-full text-black">
+                            {set.size} Terms
+                        </div>
+                        <div className="p-2 bg-[#3C4470] rounded-full">
+                            <span className={accuracyColor}>{set.accuracy}%</span> Accuracy
+                        </div>
                     </div>
                 </div>
-            </div>
-        </Link>
+            </Link>
+        </div>
     })
 
     return (
@@ -59,7 +63,7 @@ function Sets() {
                         Create Set
                     </Link>
                 </div>
-                <div className="my-4 flex justify-center md:justify-between flex-wrap">
+                <div className="my-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 flex-wrap">
                     {setCards.length ? setCards : <div className="w-full h-[30vh] text-xl flex justify-center items-center"><p>You have no sets</p></div>}
                 </div>
             </div>
