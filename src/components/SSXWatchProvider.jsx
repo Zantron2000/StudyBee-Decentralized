@@ -1,10 +1,11 @@
-import { useWalletClient } from 'wagmi';
-import { useDisconnect } from 'wagmi';
+import { useWalletClient, useDisconnect, useAccount } from 'wagmi';
 import { SSXProvider } from '@spruceid/ssx-react';
+import { useEffect } from 'react';
 
 function SSXWatchProvider({ children }) {
-    const { data: walletClient } = useWalletClient();
     const { disconnect } = useDisconnect();
+    const { data: walletClient, } = useWalletClient();
+    const { isConnected } = useAccount();
 
     const web3Provider = { provider: walletClient };
     const ssxConfig = {
@@ -15,6 +16,14 @@ function SSXWatchProvider({ children }) {
             storage: true,
         }
     };
+
+    useEffect(() => {
+        if (!isConnected) {
+            disconnect();
+        }
+
+    }, [isConnected]);
+
     const watchProvider = async (provider, ssx) => {
         try {
             if (ssx) {
