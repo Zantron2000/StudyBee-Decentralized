@@ -27,7 +27,7 @@ function Sets() {
         } else {
             setSets([]);
         }
-    }, [ssx?.session()]);
+    }, []);
 
     const setCards = sets.map((set, index) => {
         const accuracyColor = set.accuracy >= maxYellowAccuracy ? 'text-[#00FF00]' : set.accuracy >= maxRedAccuracy ? 'text-[#FFFF00]' : 'text-[#FF0000]';
@@ -42,9 +42,12 @@ function Sets() {
                         <div className="p-2 bg-[#D9D9D9] rounded-full text-black">
                             {set.size} Terms
                         </div>
-                        <div className="p-2 bg-[#3C4470] rounded-full">
-                            <span className={accuracyColor}>{set.accuracy}%</span> Accuracy
-                        </div>
+                        {drugHippos(
+                            <div className="p-2 bg-[#3C4470] rounded-full">
+                                <span className={accuracyColor}>{set.accuracy}%</span> Accuracy
+                            </div>,
+                            set.accuracy !== undefined
+                        )}
                     </div>
                 </div>
             </Link>

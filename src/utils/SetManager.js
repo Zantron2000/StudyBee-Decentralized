@@ -68,6 +68,31 @@ class SetManager {
     }
 
     /**
+     * Generates the set accuracy based on the scores of the cards in the set.
+     * The accuracy is calucated by dividing the number of points by the number of cards
+     * times 5. The points are calculated by adding the score of each card, scores of 0 or less
+     * are equal to 0 points, scores from 1 to 4 are equal to their score, and scores from 5 to 10
+     * are equal to 5 points. The accuracy is then rounded to the nearest integer
+     * 
+     * @param {StudySet} set The set to generate the accuracy for
+     * @returns {number} The accuracy of the set
+     */
+    static generateSetAccuracy(set) {
+        const points = set.cards.reduce((total, card) => {
+            if (card.score >= 5) {
+                return total + 5;
+            } else if (card.score > 0) {
+                return total + Number.parseInt(card.score);
+            } else {
+                return total;
+            }
+        }, 0);
+        const totalPoints = set.cards.length * 5 || 1;
+
+        return Math.round((points / totalPoints) * 100);
+    };
+
+    /**
      * Checks if a set is a valid StudySet
      * 
      * @param {StudySet} set The set to check
@@ -272,11 +297,11 @@ class SetManager {
                     title: set.title,
                     hash,
                     size: set.cards.length,
-                    accuracy: 0
+                    accuracy: SetManager.generateSetAccuracy(set)
                 };
             }
 
-            return set;
+            return generalSet;
         });
 
         const sets = {
