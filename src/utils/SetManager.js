@@ -161,6 +161,18 @@ class SetManager {
         }
     }
 
+    static getSetSize(set) {
+        return set.cards.length;
+    }
+
+    static getCardValue(set, cardIdx, display) {
+        const card = set.cards[cardIdx];
+
+        if (card) {
+            return card[display];
+        }
+    }
+
     async initializeSets() {
         try {
             const response = await this.ssx.storage.put(`${SetManager.prefix}${SetManager.sets}`, { sets: [] });
