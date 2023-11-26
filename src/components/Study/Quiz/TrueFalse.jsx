@@ -1,5 +1,5 @@
-import QuizManager from "../../../utils/Managers/QuizManager";
-import TrueFalseManager from "../../../utils/Managers/TrueFalseManager";
+import QuizManager from "../../../utils/Managers/Study/QuizManager";
+import TrueFalseManager from "../../../utils/Managers/Study/TrueFalseManager";
 import { capitalize } from '../../../utils/tools';
 
 function TrueFalse({ question, manager }) {

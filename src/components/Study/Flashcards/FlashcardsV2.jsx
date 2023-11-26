@@ -4,7 +4,7 @@ import { useSSX } from "@spruceid/ssx-react";
 
 import SetManager from "../../../utils/SetManager";
 import Header from "./Header";
-import FlashCardManager from "../../../utils/Managers/FlashcardManager";
+import FlashCardManager from "../../../utils/Managers/Study/FlashcardManager";
 
 function Flashcards({ set, setDone }) {
     const [learning, setLearning] = useState(0);
@@ -12,9 +12,14 @@ function Flashcards({ set, setDone }) {
     const [display, setDisplay] = useState('term');
     const [cardIdx, setCardIdx] = useState(0);
     const [options, setOptions] = useState(FlashCardManager.DEFAULT_OPTIONS);
+    const [order, setOrder] = useState([]);
     const { ssx } = useSSX();
     const setManager = new SetManager(ssx);
-    const flashcardManager = new FlashCardManager(learning, setLearning, known, setKnown, cardIdx, setCardIdx, setManager, set, display, setDisplay, options);
+    const flashcardManager = new FlashCardManager(learning, setLearning, known, setKnown, cardIdx, setCardIdx, setManager, set, display, setDisplay, options, order, setOrder);
+
+    useEffect(() => {
+        flashcardManager.initialize();
+    }, [options]);
 
     useEffect(() => {
         if (cardIdx === SetManager.getSetSize(set)) {
@@ -24,7 +29,7 @@ function Flashcards({ set, setDone }) {
 
     return (
         <div className="w-[90%] max-w-[1296px] mx-auto py-4 flex flex-col items-center">
-            <Header cardInx={cardIdx} set={set} />
+            <Header cardInx={cardIdx} set={set} options={options} setOptions={setOptions} />
             <div className="w-full flex flex-col items-center">
                 <div className="w-[90%] py-8">
                     <button className="w-full bg-secondary-background p-2 rounded-lg h-[50vh]" onClick={() => flashcardManager.flipCard()}>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import QuizManager from "../../../utils/Managers/QuizManager";
+import QuizManager from "../../../utils/Managers/Study/QuizManager";
 import { capitalize } from "../../../utils/tools";
 
 function ShortAnswer({ question, manager }) {

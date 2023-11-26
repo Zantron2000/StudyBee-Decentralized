@@ -9,9 +9,7 @@ function SSXWatchProvider({ children }) {
 
     const web3Provider = { provider: walletClient };
     const ssxConfig = {
-        siweConfig: {
-            domain: 'localhost:5173',
-        },
+        siweConfig: {},
         modules: {
             storage: true,
         }

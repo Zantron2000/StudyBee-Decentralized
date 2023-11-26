@@ -1,4 +1,4 @@
-import QuizManager from "../../../utils/Managers/QuizManager";
+import QuizManager from "../../../utils/Managers/Study/QuizManager";
 import Quiz from "./Quiz";
 import { drugHippos } from "../../../utils/tools";
 

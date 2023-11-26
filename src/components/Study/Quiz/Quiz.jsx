@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import QuizManager from "../../../utils/Managers/QuizManager";
+import QuizManager from "../../../utils/Managers/Study/QuizManager";
 import Header from "./Header";
 import QuestionBox from "./QuestionBox";
 import Results from "./Results";

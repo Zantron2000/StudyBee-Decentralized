@@ -3,7 +3,7 @@ import { useSSX } from "@spruceid/ssx-react";
 
 import MultipleChoice from "./MultipleChoice";
 import ShortAnswer from "./ShortAnswer";
-import LearnManager from "../../../utils/Managers/LearnManager";
+import LearnManager from "../../../utils/Managers/Study/LearnManager";
 import SetManager from "../../../utils/SetManager";
 
 function QuestionBox({ manager, roundCards, finishRound, increaseScore, decreaseScore, questionNumber, setQuestionNumber }) {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import LearnManager from "../../../utils/Managers/LearnManager";
+import LearnManager from "../../../utils/Managers/Study/LearnManager";
 
 function ShortAnswer({ card, setCorrect, overrideAnswer, ask }) {
     const [answer, setAnswer] = useState('');

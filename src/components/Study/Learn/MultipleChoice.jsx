@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import Choice from "./Choice";
-import LearnManager from "../../../utils/Managers/LearnManager";
+import LearnManager from "../../../utils/Managers/Study/LearnManager";
 
 function MultipleChoice({ card, wrongCards, setCorrect, ask }) {
     const [choice, setChoice] = useState(-1);

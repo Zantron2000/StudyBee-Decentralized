@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import LearnManager from "../../../utils/Managers/LearnManager";
+import LearnManager from "../../../utils/Managers/Study/LearnManager";
 import Learn from "./LearnV2";
 
 function LearnOptions({ options, setOptions, openMenu, setOpenMenu }) {

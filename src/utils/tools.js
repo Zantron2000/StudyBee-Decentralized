@@ -12,3 +12,10 @@ export const drugHippos = (element, ...conditions) => {
 
     return null;
 }
+
+export const shuffle = (array) => {
+    return array
+        .map((value) => [Math.random(), value])
+        .sort((a, b) => a[0] - b[0])
+        .map((value) => value[1]);
+}

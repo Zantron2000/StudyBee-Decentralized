@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import QuizManager from "../../../utils/Managers/QuizManager";
+import QuizManager from "../../../utils/Managers/Study/QuizManager";
 
 function Options({ options, setOptions, setOpenOptions, size }) {
     const [tempOptions, setTempOptions] = useState(options);

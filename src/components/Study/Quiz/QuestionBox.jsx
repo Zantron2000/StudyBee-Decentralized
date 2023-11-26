@@ -1,4 +1,4 @@
-import QuizManager from "../../../utils/Managers/QuizManager";
+import QuizManager from "../../../utils/Managers/Study/QuizManager";
 import MultipleChoice from "./MultipleChoice";
 import ShortAnswer from "./ShortAnswer";
 import TrueFalse from "./TrueFalse";

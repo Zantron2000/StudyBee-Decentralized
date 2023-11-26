@@ -1,5 +1,5 @@
-import QuizManager from "../../../utils/Managers/QuizManager";
-import MultipleChoiceManager from "../../../utils/Managers/MultipleChoiceManager";
+import QuizManager from "../../../utils/Managers/Study/QuizManager";
+import MultipleChoiceManager from "../../../utils/Managers/Study/MultipleChoiceManager";
 import { capitalize } from '../../../utils/tools';
 import Choice from "./Choice";
 

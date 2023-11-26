@@ -1,4 +1,31 @@
-function Options({ close, updateOptions }) {
+import { useState } from "react";
+
+import FlashCardManager from "../../../utils/Managers/Study/FlashcardManager"
+
+function Options({ close, setOptions, options }) {
+    const [tempOptions, setTempOptions] = useState(options);
+
+    const changeDisplay = (e) => {
+        setTempOptions({
+            ...tempOptions,
+            display: e.target.value
+        });
+    }
+
+    const changeOrder = (e) => {
+        setTempOptions({
+            ...tempOptions,
+            order: e.target.value
+        });
+    }
+
+    const updateOptions = (e) => {
+        e.preventDefault();
+
+        setOptions(tempOptions);
+        close();
+    }
+
     return (
         <div className="w-screen h-screen flex justify-center items-center absolute top-0 left-0 bg-black/50">
             <div className="max-w-[500px] w-1/2 min-h-[75%] border-white border rounded-lg bg-primary-background p-4 flex flex-col justify-between">
@@ -18,7 +45,68 @@ function Options({ close, updateOptions }) {
                         </div>
                     </div>
                     <form>
-                        Hi
+                        <div className="border-b">
+                            <div className="py-2 text-xl">
+                                Show
+                            </div>
+                            <div className="py-2 space-y-2 text-lg px-4">
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id={FlashCardManager.TERM}
+                                        name="display"
+                                        value={FlashCardManager.TERM}
+                                        defaultChecked={tempOptions.display === FlashCardManager.TERM}
+                                        className='mx-2'
+                                        onChange={changeDisplay}
+                                    />
+                                    <label htmlFor={FlashCardManager.TERM}>Term</label>
+                                </div>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id={FlashCardManager.DEFINITION}
+                                        name="display"
+                                        value={FlashCardManager.DEFINITION}
+                                        defaultChecked={tempOptions.ask === FlashCardManager.DEFINITION}
+                                        className='mx-2'
+                                        onChange={changeDisplay}
+                                    />
+                                    <label htmlFor={FlashCardManager.DEFINITION}>Definition</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="border-b">
+                            <div className="py-2 text-xl">
+                                Order
+                            </div>
+                            <div className="py-2 space-y-2 text-lg px-4">
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id={FlashCardManager.IN_ORDER}
+                                        name="order"
+                                        value={FlashCardManager.IN_ORDER}
+                                        defaultChecked={tempOptions.order === FlashCardManager.IN_ORDER}
+                                        className='mx-2'
+                                        onChange={changeOrder}
+                                    />
+                                    <label htmlFor={FlashCardManager.IN_ORDER}>In Order</label>
+                                </div>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id={FlashCardManager.RANDOM}
+                                        name="order"
+                                        value={FlashCardManager.RANDOM}
+                                        defaultChecked={tempOptions.order === FlashCardManager.RANDOM}
+                                        className='mx-2'
+                                        onChange={changeOrder}
+                                    />
+                                    <label htmlFor={FlashCardManager.RANDOM}>Random</label>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <button

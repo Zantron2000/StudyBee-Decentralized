@@ -5,7 +5,7 @@ import { drugHippos } from "../../../utils/tools";
 import Options from "./Options";
 import SetManager from "../../../utils/SetManager";
 
-function Header({ cardInx, set }) {
+function Header({ cardInx, set, setOptions, options }) {
     const [openOptions, setOpenOptions] = useState(false);
     const size = SetManager.getSetSize(set);
 
@@ -41,7 +41,7 @@ function Header({ cardInx, set }) {
                     Exit
                 </Link>
             </div>
-            {drugHippos(<Options close={closeOptionsMenu} />, openOptions)}
+            {drugHippos(<Options close={closeOptionsMenu} setOptions={setOptions} options={options} />, openOptions)}
         </div>
     )
 }

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useSSX } from '@spruceid/ssx-react'
 
 import SetManager from "../../../utils/SetManager";
-import LearnManager from "../../../utils/Managers/LearnManager";
+import LearnManager from "../../../utils/Managers/Study/LearnManager";
 import LearnOptions from "./LearnOptions";
 import QuestionBox from "./QuestionBox";
 import RoundResults from "./RoundResults";
