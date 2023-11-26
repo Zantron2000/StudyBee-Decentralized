@@ -40,7 +40,7 @@ function SetOptions({ open, setOpen, manager, set }) {
                     >
                         Edit Set
                     </button>
-                    <button className="w-[75%] bg-primary-button rounded-lg py-2">Export Set</button>
+                    <button className="w-[75%] bg-primary-button rounded-lg py-2" disabled >Export Set</button>
                 </div>
                 <div></div>
             </div>

@@ -31,14 +31,14 @@ function TrueFalse({ question, manager }) {
             </div>
             <div className="flex justify-between">
                 <button
-                    className={`bg-primary-button w-1/3 py-4 rounded-xl text-xl ${answer === false ? 'bg-black' : 'hover:bg-primary-button/75'}`}
+                    className={`w-1/3 py-4 rounded-xl text-xl ${answer === false ? 'bg-primary-background' : 'bg-primary-button hover:bg-primary-button/75'}`}
                     onClick={setFalse}
                     disabled={answer === false}
                 >
                     False
                 </button>
                 <button
-                    className={`bg-primary-button w-1/3 py-4 rounded-xl text-xl ${answer === true ? 'bg-black' : 'hover:bg-primary-button/75'}`}
+                    className={`w-1/3 py-4 rounded-xl text-xl ${answer === true ? 'bg-primary-background' : 'bg-primary-button hover:bg-primary-button/75'}`}
                     onClick={setTrue}
                     disabled={answer === true}
                 >

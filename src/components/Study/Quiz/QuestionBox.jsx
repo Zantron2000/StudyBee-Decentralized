@@ -3,7 +3,7 @@ import MultipleChoice from "./MultipleChoice";
 import ShortAnswer from "./ShortAnswer";
 import TrueFalse from "./TrueFalse";
 
-function QuestionBox({ manager, questionNumber, setQuestionNumber, setShowResults }) {
+function QuestionBox({ manager, questionNumber, setQuestionNumber, finish }) {
     const question = manager.getQuestion(questionNumber);
 
 
@@ -11,7 +11,7 @@ function QuestionBox({ manager, questionNumber, setQuestionNumber, setShowResult
         if (questionNumber < manager.getTotalQuestions() - 1) {
             setQuestionNumber(questionNumber + 1);
         } else {
-            setShowResults(true);
+            finish();
         }
     }
 
