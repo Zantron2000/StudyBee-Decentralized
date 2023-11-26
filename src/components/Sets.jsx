@@ -27,7 +27,7 @@ function Sets() {
         } else {
             setSets([]);
         }
-    }, []);
+    }, [ssxManager.hasSession()]);
 
     const setCards = sets.map((set, index) => {
         const accuracyColor = set.accuracy >= maxYellowAccuracy ? 'text-[#00FF00]' : set.accuracy >= maxRedAccuracy ? 'text-[#FFFF00]' : 'text-[#FF0000]';
