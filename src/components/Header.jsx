@@ -1,20 +1,25 @@
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useAccount } from 'wagmi'
 import { useSSX } from "@spruceid/ssx-react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import SSXManager from "../utils/SSXManager";
+import NavigationManager from "../utils/Managers/NavigationManager";
 
 function Header() {
     const { open } = useWeb3Modal();
     const { ssx } = useSSX();
     const { isConnected } = useAccount();
+    const nav = useNavigate();
+    const navManager = new NavigationManager(nav);
     const ssxManager = new SSXManager(ssx);
 
     const view = isConnected && ssxManager.hasSession() ? 'Account' : 'Connect';
 
     const search = (e) => {
         e.preventDefault()
+
+        navManager.navigateSearch(e.target[0].value)
     }
 
     return (

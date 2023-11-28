@@ -13,6 +13,10 @@ class NavigationManager {
         this.navigator('/', { state });
     };
 
+    navigateSearch(search, state) {
+        this.navigator(`/?search=${search}`, { state });
+    }
+
     navigateSetHome(hash, state) {
         this.navigator(`/sets/${hash}`, { state });
     };
