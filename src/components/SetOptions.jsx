@@ -21,11 +21,11 @@ function SetOptions({ open, setOpen, manager, set }) {
 
     return (
         <div className="fixed bg-black/50 w-screen h-screen z-10 top-0 left-0 flex justify-center items-center">
-            <div className="bg-primary-background w-1/2 h-1/2 rounded-lg border p-4 flex flex-col justify-between">
+            <div className="bg-primary-background w-full min-h-[250px] h-full sm:w-1/2 sm:h-1/2 sm:rounded-lg sm:border p-8 sm:p-4 flex flex-col justify-between sm:max-w-[500px]">
                 <div className="flex justify-between items-center">
-                    <div></div>
-                    <div className="text-lg">Set Options</div>
-                    <button className="bg-secondary-button p-2 rounded-lg" onClick={() => setOpen(false)}>Close</button>
+                    <div className="w-[20%] lg:w-[15%]"></div>
+                    <div className="text-xl text-center w-[60%] lg:w-[70%]">Set Options</div>
+                    <button className="bg-secondary-button p-2 rounded-lg w-[20%] lg:w-[15%] hover:bg-secondary-button/75 text-lg" onClick={() => setOpen(false)}>Close</button>
                 </div>
                 <div className="flex flex-col justify-center items-center space-y-4">
                     <button

@@ -34,7 +34,7 @@ function Header({ cardInx, set, setOptions, options }) {
                     Options
                 </button>
                 <Link
-                    className="py-2 px-4 border-2 border-secondary-background rounded-lg hover:bg-black/50 ml-4"
+                    className="py-2 px-4 border-2 border-secondary-background rounded-lg hover:bg-white/25 ml-4"
                     to={`/sets/${set.hash}`}
                     state={{ set }}
                 >

@@ -60,33 +60,35 @@ function HomeSet({ set, setSet }) {
 
     return (
         <div className="w-[90%] max-w-[1296px] mx-auto py-4 min-h-[60vh]">
-            <div className="py-4 text-lg">
+            <div className="py-4 text-lg sm:text-xl">
                 <h1>{title}</h1>
             </div>
-            <div className="flex justify-between space-x-4 py-4">
-                <Link
-                    className="w-1/4 bg-primary-button py-2 px-4 rounded-lg text-center hover:bg-primary-button/75"
-                    to={`/sets/${set.hash}/flashcards`}
-                    state={{ set }}
-                >
-                    Flashcards
-                </Link>
-                <Link
-                    className="w-1/4 bg-primary-button py-2 px-4 rounded-lg text-center hover:bg-primary-button/75"
-                    to={`/sets/${set.hash}/learn`}
-                    state={{ set }}
-                >
-                    Learn
-                </Link>
-                <Link
-                    className="w-1/4 bg-primary-button py-2 px-4 rounded-lg text-center hover:bg-primary-button/75"
-                    to={`/sets/${set.hash}/quiz`}
-                    state={{ set }}
-                >
-                    Quiz
-                </Link>
+            <div className="flex flex-col md:flex-row md:justify-between md:space-x-4 py-4 text-xl space-y-8 md:space-y-0">
+                <div className='w-full md:w-[75%] flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0 md:space-x-4'>
+                    <Link
+                        className="w-full md:w-1/3 bg-primary-button py-2 px-4 rounded-lg text-center hover:bg-primary-button/75"
+                        to={`/sets/${set.hash}/flashcards`}
+                        state={{ set }}
+                    >
+                        Flashcards
+                    </Link>
+                    <Link
+                        className="w-full md:w-1/3 bg-primary-button py-2 px-4 rounded-lg text-center hover:bg-primary-button/75"
+                        to={`/sets/${set.hash}/learn`}
+                        state={{ set }}
+                    >
+                        Learn
+                    </Link>
+                    <Link
+                        className="w-full md:w-1/3 bg-primary-button py-2 px-4 rounded-lg text-center hover:bg-primary-button/75"
+                        to={`/sets/${set.hash}/quiz`}
+                        state={{ set }}
+                    >
+                        Quiz
+                    </Link>
+                </div>
                 <button
-                    className="w-1/4 bg-secondary-button py-2 px-4 rounded-lg hover:bg-secondary-button/75"
+                    className="w-full md:w-1/5 md:max-w-[250px] bg-secondary-button py-2 px-4 rounded-lg hover:bg-secondary-button/75"
                     onClick={() => setOpenOptions(true)}
 
                 >Options
@@ -94,12 +96,12 @@ function HomeSet({ set, setSet }) {
             </div>
             <div className="py-2">
                 <div>
-                    <div className="text-lg">
+                    <div className="text-xl mb-2">
                         <h2>Preview</h2>
                     </div>
-                    <button className="w-full bg-secondary-background p-2 rounded-lg h-[50vh]" onClick={flipCard}>
-                        <div className="h-[90%] w-full flex justify-center items-center text-lg">{cards?.[currentCard]?.[display]}</div>
-                        <div className="h-[10%] w-full flex justify-center items-center">Click to flip</div>
+                    <button className="w-full bg-secondary-background p-4 rounded-lg" onClick={flipCard}>
+                        <div className="min-h-[50vh] md:min-h-[35vh] lg:min-h-[25vh] w-full flex justify-center items-center text-lg sm:text-xl">{cards?.[currentCard]?.[display]}</div>
+                        <div className="py-2 w-full flex justify-center items-center">Click to flip</div>
                     </button>
                 </div>
                 <div className="flex justify-center py-4">
@@ -109,7 +111,7 @@ function HomeSet({ set, setSet }) {
                                 Back
                             </div>
                         </button>
-                        <div className="text-lg text-xl">{currentCard + 1}/{cards?.length}</div>
+                        <div className="text-lg sm:text-xl">{currentCard + 1}/{cards?.length}</div>
                         <button onClick={nextCard}>
                             <div className="text-lg border border-white py-2 px-4 rounded-lg hover:bg-secondary-button">
                                 Next
@@ -122,10 +124,10 @@ function HomeSet({ set, setSet }) {
                 </div>
             </div>
             <div className="py-2">
-                <div className="py-2">
-                    <h2>Terms in this set</h2>
+                <div className="py-2 text-lg">
+                    <h2>Cards in this set</h2>
                 </div>
-                <div className="space-y-4 flex flex-col">
+                <div className="space-y-12 flex flex-col">
                     {
                         ...cards?.map((term, index) => {
                             return (
@@ -134,6 +136,7 @@ function HomeSet({ set, setSet }) {
                                     id={index}
                                     term={term}
                                     setTerm={setCard}
+                                    index={index}
                                 />
                             );
                         })
