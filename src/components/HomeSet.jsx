@@ -124,7 +124,7 @@ function HomeSet({ set, setSet }) {
                 </div>
             </div>
             <div className="py-2">
-                <div className="py-2 text-lg">
+                <div className="py-2 text-xl">
                     <h2>Cards in this set</h2>
                 </div>
                 <div className="space-y-12 flex flex-col">

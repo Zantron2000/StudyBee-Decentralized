@@ -67,9 +67,6 @@ function EditSet({ set, setSet }) {
         setTerms(newTerms);
     };
 
-
-    console.log('Updated Set', terms)
-
     const deleteCard = (index) => {
         const newTerms = [...terms];
         newTerms.splice(index, 1);
@@ -96,7 +93,7 @@ function EditSet({ set, setSet }) {
     return (
         <div className="w-[90%] max-w-[1296px] mx-auto py-4  min-h-[60vh]">
             <div className="py-4">
-                <h1 className="text-2xl">Create a new set</h1>
+                <h1 className="text-2xl">Edit a Set</h1>
             </div>
             <div>
                 <form>
@@ -110,10 +107,10 @@ function EditSet({ set, setSet }) {
                                 required
                                 className="bg-input-background w-full h-[50%] rounded-lg resize-none overflow-hidden text-lg"
                                 value={title}
-                                onChange={(event) => setValue(setTitle, 250, event.target.value)}
+                                onChange={(event) => setValue(setTitle, 100, event.target.value)}
                             />
                         </div>
-                        <div className="flex justify-end py-2">{title.length}/250</div>
+                        <div className="flex justify-end py-2">{title.length}/100</div>
                     </div>
                     <div className="flex flex-col pb-4">
                         <label htmlFor="description" className='text-xl' >Description<span className="text-red-500">*</span></label>
@@ -146,7 +143,7 @@ function EditSet({ set, setSet }) {
                             })
                         }
                     </div>
-                    <div className='my-4 flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:justify-between'>
+                    <div className='my-4 flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:justify-between text-xl'>
                         <button className='p-4 bg-primary-button rounded-lg' onClick={addCard}>Add another card</button>
                         <button
                             className='p-4 bg-primary-button rounded-lg'

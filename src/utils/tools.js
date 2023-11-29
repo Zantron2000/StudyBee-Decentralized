@@ -19,3 +19,11 @@ export const shuffle = (array) => {
         .sort((a, b) => a[0] - b[0])
         .map((value) => value[1]);
 }
+
+export const generateShowFunctions = (setVisability) => {
+    return {
+        open: () => setVisability(true),
+        close: () => setVisability(false),
+    };
+}
+

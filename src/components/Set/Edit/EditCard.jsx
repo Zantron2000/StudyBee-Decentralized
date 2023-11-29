@@ -8,7 +8,7 @@ function EditCard({ id, card, setCardTerm, setCardDefinition, deleteCard }) {
         <div className='bg-secondary-background rounded-lg p-2'>
             <div className='text-xl py-2 px-2 flex justify-between'>
                 <p>Card {id + 1}</p>
-                <button className='border border-white py-2 px-1 rounded-lg' onClick={deleteCardSafe}>Delete</button>
+                <button className='border border-white py-2 px-1 rounded-lg hover:bg-black/25' onClick={deleteCardSafe}>Delete</button>
             </div>
             <div className='flex flex-col sm:flex-row sm:justify-between'>
                 <div className='w-full sm:w-[50%] px-2'>

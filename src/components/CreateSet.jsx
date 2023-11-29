@@ -1,31 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSSX } from '@spruceid/ssx-react';
 import { useNavigate } from 'react-router-dom';
 
 import CreateCard from './CreateCard';
 import SetManager from '../utils/SetManager';
 import SSXManager from '../utils/SSXManager';
+import FormManager from '../utils/Managers/Set/FormManager';
 
 function CreateSet() {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [terms, setTerms] = useState([{ term: '', definition: '' }]);
+    const [set, setSet] = useState(FormManager.DEFAULT_SET);
+    const [errors, setErrors] = useState(FormManager.DEFAULT_ERRORS);
     const { ssx } = useSSX();
     const navigate = useNavigate();
-
     const setManager = new SetManager(ssx);
     const ssxManager = new SSXManager(ssx);
+    const formManager = new FormManager(set, setSet, errors, setErrors);
 
     const createSet = async (event) => {
         event.preventDefault();
+        const isValid = formManager.validate();
 
-        const set = {
-            title,
-            description,
-            cards: terms,
-        };
-
-        if (ssxManager.hasSession()) {
+        if (isValid && ssxManager.hasSession()) {
             const hash = await setManager.addSet(set);
 
             set.hash = hash;
@@ -33,61 +28,23 @@ function CreateSet() {
         }
     };
 
-    const setValue = (setter, maxLength, value) => {
-        if (value.length <= maxLength) {
-            setter(value);
+    const resizeTextareaWrapper = (func) => {
+        return (event) => {
+            event.target.style.height = 'auto';
+            event.target.style.height = `${event.target.scrollHeight}px`;
+            func(event.target.value);
         }
-    };
+    }
 
-    const setCardTerm = (index, value) => {
-        if (value.length <= 250) {
-            const newTerms = [...terms];
-            newTerms[index].term = value;
-
-            setTerms(newTerms);
+    const disableEventWrapper = (func) => {
+        return (event) => {
+            event.preventDefault();
+            func();
         }
-    };
-
-    const setCardDefinition = (index, value) => {
-        if (value.length <= 500) {
-            const newTerms = [...terms];
-            newTerms[index].definition = value;
-
-            setTerms(newTerms);
-        }
-    };
-
-    const addCard = (event) => {
-        event.preventDefault();
-        const newTerms = [...terms, { term: '', definition: '' }];
-
-        setTerms(newTerms);
-    };
-
-    const deleteCard = (index) => {
-        const newTerms = [...terms];
-        newTerms.splice(index, 1);
-
-        if (newTerms.length === 0) {
-            newTerms.push({ term: '', definition: '' });
-        }
-
-        setTerms(newTerms);
-    };
-
-    // Add an useEffect to attach a listener to all textareas, that prints hello on input
-    useEffect(() => {
-        const textareas = document.querySelectorAll('textarea');
-        textareas.forEach(textarea => {
-            textarea.addEventListener('input', (event) => {
-                event.target.style.height = 'auto';
-                event.target.style.height = `${event.target.scrollHeight}px`;
-            });
-        });
-    }, []);
+    }
 
     return (
-        <div className="w-[90%] max-w-[1296px] mx-auto py-4  min-h-[60vh]">
+        <div className={`w-[90%] max-w-[1296px] mx-auto py-4 min-h-[60vh] overflow-hidden`} >
             <div className="py-4">
                 <h1 className="text-2xl">Create a new set</h1>
             </div>
@@ -102,11 +59,15 @@ function CreateSet() {
                                 name="title"
                                 required
                                 className="bg-input-background w-full h-[50%] rounded-lg resize-none overflow-hidden text-lg"
-                                value={title}
-                                onChange={(event) => setValue(setTitle, 250, event.target.value)}
+                                value={formManager.getTitle()}
+                                placeholder='Enter a title for the set...'
+                                onChange={resizeTextareaWrapper((title) => formManager.updateTitle(title))}
                             />
                         </div>
-                        <div className="flex justify-end py-2">{title.length}/250</div>
+                        <div className="flex justify-between py-2 text-lg">
+                            <div className='text-[#ff0000]'>{errors.title}</div>
+                            <div>{formManager.getTitle().length}/{FormManager.MAX_TITLE_LENGTH}</div>
+                        </div>
                     </div>
                     <div className="flex flex-col pb-4">
                         <label htmlFor="description" className='text-xl' >Description<span className="text-red-500">*</span></label>
@@ -117,32 +78,40 @@ function CreateSet() {
                                 name="description"
                                 required
                                 className="bg-input-background w-full h-full rounded-lg resize-none overflow-hidden text-lg"
-                                value={description}
-                                onChange={(event) => setValue(setDescription, 500, event.target.value)}
+                                value={formManager.getDescription()}
+                                placeholder='Enter a description for the set...'
+                                onChange={resizeTextareaWrapper((description) => formManager.updateDescription(description))}
                             />
                         </div>
-                        <div className="flex justify-end py-2">{description.length}/500</div>
+                        <div className="flex justify-between py-2 text-lg">
+                            <div className='text-[#ff0000]'>{errors.description}</div>
+                            <div>{formManager.getDescription().length}/{FormManager.MAX_DESCRIPTION_LENGTH}</div>
+                        </div>
                     </div>
-                    <div className='space-y-4'>
+                    <div className='space-y-8 mb-12'>
                         {
-                            ...terms.map((card, index) => {
+                            ...formManager.getCards().map((card, index) => {
                                 return (
                                     <CreateCard
                                         key={index}
-                                        id={index}
+                                        index={index}
                                         card={card}
-                                        setCardTerm={setCardTerm}
-                                        setCardDefinition={setCardDefinition}
-                                        deleteCard={deleteCard}
+                                        manager={formManager}
+                                        errors={errors.cards[index]}
                                     />
                                 );
                             })
                         }
                     </div>
-                    <div className='my-4 flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:justify-between'>
-                        <button className='p-4 bg-primary-button rounded-lg' onClick={addCard}>Add another card</button>
+                    <div className='flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:justify-between text-xl'>
                         <button
-                            className='p-4 bg-primary-button rounded-lg'
+                            className='p-4 bg-primary-button rounded-lg hover:bg-primary-button/50'
+                            onClick={disableEventWrapper(() => formManager.addCard())}
+                        >
+                            Add another card
+                        </button>
+                        <button
+                            className='p-4 bg-primary-button rounded-lg hover:bg-primary-button/50'
                             onClick={createSet}
                         >
                             Create Set

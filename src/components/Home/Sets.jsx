@@ -2,14 +2,11 @@ import { useState, useEffect } from "react";
 import { useSSX } from "@spruceid/ssx-react";
 import { Link, useSearchParams } from "react-router-dom";
 
-import SetManager from '../utils/SetManager';
-import SSXManager from '../utils/SSXManager';
-import { drugHippos } from "../utils/tools";
-import Set from "./Home/Set";
-import SearchResults from "./Home/SearchResults";
-
-const maxRedAccuracy = 60;
-const maxYellowAccuracy = 85;
+import SetManager from '../../utils/SetManager';
+import SSXManager from '../../utils/SSXManager';
+import { drugHippos } from "../../utils/tools";
+import Set from "./Set";
+import SearchResults from "./SearchResults";
 
 function Sets() {
     const [sets, setSets] = useState([]);

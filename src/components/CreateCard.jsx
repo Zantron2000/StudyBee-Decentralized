@@ -1,14 +1,27 @@
-function CreateCard({ id, card, setCardTerm, setCardDefinition, deleteCard }) {
-    const deleteCardSafe = (event) => {
-        event.preventDefault();
-        deleteCard(id);
+import FormManager from "../utils/Managers/Set/FormManager";
+import { drugHippos } from "../utils/tools";
+
+function CreateCard({ index, card, manager, errors }) {
+    const resizeTextareaWrapper = (func) => {
+        return (event) => {
+            event.target.style.height = 'auto';
+            event.target.style.height = `${event.target.scrollHeight}px`;
+            func(index, event.target.value);
+        }
+    }
+
+    const disableEventWrapper = (func) => {
+        return (event) => {
+            event.preventDefault();
+            func();
+        }
     }
 
     return (
         <div className='bg-secondary-background rounded-lg p-2'>
             <div className='text-xl py-2 px-2 flex justify-between'>
-                <p>Card {id + 1}</p>
-                <button className='border border-white py-2 px-1 rounded-lg' onClick={deleteCardSafe}>Delete</button>
+                <p>Card {index + 1}</p>
+                <button className='border border-white py-2 px-2 rounded-lg hover:bg-black/50' onClick={disableEventWrapper(() => manager.removeCard(index))}>Delete</button>
             </div>
             <div className='flex flex-col sm:flex-row sm:justify-between'>
                 <div className='w-full sm:w-[50%] px-2'>
@@ -22,10 +35,13 @@ function CreateCard({ id, card, setCardTerm, setCardDefinition, deleteCard }) {
                             className="bg-input-background w-full h-full rounded-lg resize-none overflow-hidden text-lg"
                             placeholder='Enter term here...'
                             value={card.term}
-                            onChange={(event) => setCardTerm(id, event.target.value)}
+                            onChange={resizeTextareaWrapper((index, term) => manager.updateTerm(index, term))}
                         />
                     </div>
-                    <div className="flex justify-end py-2">{card.term.length}/250</div>
+                    <div className="flex justify-between py-2 text-lg">
+                        <div className='text-[#ff0000]'>{errors?.term}</div>
+                        <div>{card.term.length}/{FormManager.MAX_TERM_LENGTH}</div>
+                    </div>
                 </div>
                 <div className='w-full sm:w-[50%] px-2'>
                     <label htmlFor="definition" className='text-xl' >Definition<span className="text-red-500">*</span></label>
@@ -38,10 +54,13 @@ function CreateCard({ id, card, setCardTerm, setCardDefinition, deleteCard }) {
                             className="bg-input-background w-full h-full rounded-lg resize-none overflow-hidden text-lg"
                             placeholder='Enter definition here...'
                             value={card.definition}
-                            onChange={(event) => setCardDefinition(id, event.target.value)}
+                            onChange={resizeTextareaWrapper((index, term) => manager.updateDefinition(index, term))}
                         />
                     </div>
-                    <div className="flex justify-end py-2">{card.definition.length}/500</div>
+                    <div className="flex justify-between py-2 text-lg">
+                        <div className='text-[#ff0000]'>{errors?.definition}</div>
+                        <div>{card.definition.length}/{FormManager.MAX_DEFINITION_LENGTH}</div>
+                    </div>
                 </div>
             </div>
         </div>
