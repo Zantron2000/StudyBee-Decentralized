@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useSSX } from '@spruceid/ssx-react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState } from "react";
+import { useSSX } from "@spruceid/ssx-react";
+import { useNavigate, Link } from "react-router-dom";
 
-import CreateCard from './CreateCard';
-import SetManager from '../utils/SetManager';
-import SSXManager from '../utils/SSXManager';
-import FormManager from '../utils/Managers/Set/FormManager';
+import SSXManager from "../../../utils/SSXManager";
+import SetManager from "../../../utils/SetManager";
+import EditCard from "./EditCard";
+import FormManager from "../../../utils/Managers/Set/FormManager";
 
-function CreateSet() {
-    const [set, setSet] = useState(FormManager.getDefaultSet());
+function EditSet({ set: realSet }) {
+    const [set, setSet] = useState(JSON.parse(JSON.stringify(realSet)));
     const [errors, setErrors] = useState(FormManager.getDefaultErrors());
     const { ssx } = useSSX();
     const navigate = useNavigate();
@@ -16,13 +16,13 @@ function CreateSet() {
     const ssxManager = new SSXManager(ssx);
     const formManager = new FormManager(set, setSet, errors, setErrors);
 
-    const createSet = async (event) => {
+    const upsertSet = async (event) => {
         event.preventDefault();
         const isValid = formManager.validate();
 
         if (isValid && ssxManager.hasSession()) {
             SetManager.addCardIds(set);
-            const hash = await setManager.addSet(set);
+            const hash = await setManager.upsertSet(set);
 
             set.hash = hash;
             navigate(`/sets/${hash}`, { state: { set } });
@@ -44,17 +44,17 @@ function CreateSet() {
         }
     }
 
-    useEffect(() => {
-        if (set !== FormManager.DEFAULT_SET) {
-            setSet(FormManager.getDefaultSet());
-        }
-    }, []);
-
     return (
         <div className={`w-[90%] max-w-[1296px] mx-auto py-4 min-h-[60vh] overflow-hidden`} >
             <div className="py-4 flex justify-between items-center">
-                <h1 className="text-2xl">Create a new set</h1>
-                <Link to='/' className='text-xl p-2 bg-primary-button rounded-lg hover:bg-primary-button/50'>Cancel</Link>
+                <h1 className="text-2xl">Edit Set</h1>
+                <Link
+                    to={`/sets/${set.hash}`}
+                    className='text-xl p-2 bg-primary-button rounded-lg hover:bg-primary-button/50'
+                    state={{ set: realSet }}
+                >
+                    Cancel
+                </Link>
             </div>
             <div>
                 <form>
@@ -100,7 +100,7 @@ function CreateSet() {
                         {
                             ...formManager.getCards().map((card, index) => {
                                 return (
-                                    <CreateCard
+                                    <EditCard
                                         key={index}
                                         index={index}
                                         card={card}
@@ -120,15 +120,15 @@ function CreateSet() {
                         </button>
                         <button
                             className='p-4 bg-primary-button rounded-lg hover:bg-primary-button/50'
-                            onClick={createSet}
+                            onClick={upsertSet}
                         >
-                            Create Set
+                            Save Set
                         </button>
                     </div>
                 </form>
             </div>
         </div>
     );
-};
+}
 
-export default CreateSet;
+export default EditSet

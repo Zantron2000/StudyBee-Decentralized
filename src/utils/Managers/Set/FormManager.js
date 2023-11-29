@@ -9,9 +9,21 @@ class FormManager {
 
     static DEFAULT_CARD = { term: '', definition: '' };
 
-    static DEFAULT_SET = { title: '', description: '', cards: [{ ...FormManager.DEFAULT_CARD }] };
+    static DEFAULT_SET = { title: '', description: '', cards: [FormManager.DEFAULT_CARD] };
 
     static DEFAULT_ERRORS = { title: false, description: false, cards: {} };
+
+    static getDefaultCard() {
+        return JSON.parse(JSON.stringify(FormManager.DEFAULT_CARD));
+    }
+
+    static getDefaultSet() {
+        return JSON.parse(JSON.stringify(FormManager.DEFAULT_SET));
+    }
+
+    static getDefaultErrors() {
+        return JSON.parse(JSON.stringify(FormManager.DEFAULT_ERRORS));
+    }
 
     constructor(set, setSet, errors, setErrors) {
         this.set = set;
@@ -60,7 +72,7 @@ class FormManager {
 
     addCard() {
         const tempSet = this.getTempSet();
-        tempSet.cards.push({ ...FormManager.DEFAULT_CARD });
+        tempSet.cards.push(FormManager.getDefaultCard());
 
         this.setSet(tempSet);
     }
@@ -70,7 +82,7 @@ class FormManager {
         tempSet.cards.splice(index, 1);
 
         if (!tempSet.cards.length) {
-            tempSet.cards.push({ ...FormManager.DEFAULT_CARD });
+            tempSet.cards.push(FormManager.getDefaultCard());
         }
 
         this.setSet(tempSet);

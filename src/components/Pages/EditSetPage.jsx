@@ -1,7 +1,7 @@
 import Header from "../Header"
 import MobileHeader from "../MobileHeader"
 import Footer from "../Footer"
-import EditSet from "../Set/EditSet"
+import EditSet from "../Set/Edit/EditSet"
 
 function EditSetPage({ set, setSet }) {
     return (

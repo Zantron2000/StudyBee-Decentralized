@@ -1,5 +1,4 @@
 import FormManager from "../utils/Managers/Set/FormManager";
-import { drugHippos } from "../utils/tools";
 
 function CreateCard({ index, card, manager, errors }) {
     const resizeTextareaWrapper = (func) => {
