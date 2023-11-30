@@ -3,6 +3,8 @@ class MultipleChoiceManager {
 
     static SYMBOL = 'mc';
 
+    static DEFAULT_ANSWER = 'No Answer Provided'
+
     static getRandomCard(cards) {
         return cards[Math.floor(Math.random() * cards.length)];
     }
@@ -68,7 +70,7 @@ class MultipleChoiceManager {
         const { answer, ask } = question;
         const card = MultipleChoiceManager.getCard(answer, question);
 
-        return card[ask];
+        return card?.[ask] || MultipleChoiceManager.DEFAULT_ANSWER;
     }
 }
 

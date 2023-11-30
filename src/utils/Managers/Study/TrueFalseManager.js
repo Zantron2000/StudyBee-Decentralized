@@ -1,6 +1,8 @@
 class TrueFalseManager {
     static SYMBOL = 'tf';
 
+    static DEFAULT_ANSWER = 'No Answer Provided'
+
     static getRandomCard(cards) {
         return cards[Math.floor(Math.random() * cards.length)];
     }
@@ -49,7 +51,7 @@ class TrueFalseManager {
     static getUserAnswer(question) {
         const { answer } = question;
 
-        return `${answer}`;
+        return `${answer ?? TrueFalseManager.DEFAULT_ANSWER}`;
     }
 }
 
