@@ -9,9 +9,9 @@ function Set({ setKey, set }) {
 
     return (
         <div className="w-full flex justify-center items-center">
-            <Link key={setKey} className="w-[90%] h-1/4 h-full" to={`/sets/${set.hash}`} state={{ partialSet: set }}>
-                <div className="flex bg-[#292A2D] flex-col p-4 rounded-lg text-lg my-4">
-                    <div className="mb-8">
+            <Link key={setKey} className="w-[90%] h-full" to={`/sets/${set.hash}`} state={{ partialSet: set }}>
+                <div className="flex bg-[#292A2D] justify-between flex-col p-4 rounded-lg text-lg my-4 md:h-[250px] lg:h-[250px] xl:h-[225px]">
+                    <div className="text-xl">
                         <p>{set.title}</p>
                     </div>
                     <div className="flex flex-row justify-between mt-8">

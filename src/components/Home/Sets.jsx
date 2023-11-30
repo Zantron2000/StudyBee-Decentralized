@@ -37,7 +37,7 @@ function Sets() {
         <div className="min-h-[60vh] w-[90%] max-w-[1296px] mx-auto py-8">
             <div>
                 <div className="flex justify-between items-center text-xl">
-                    <p>{search ? 'Search Results' : 'Your Sets'}</p>
+                    <p className="text-2xl">{search ? 'Search Results' : 'Your Sets'}</p>
                     <Link
                         className="px-8 py-2 bg-primary-button rounded-full"
                         to="/create"
