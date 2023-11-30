@@ -30,7 +30,7 @@ function Sets() {
     }, [ssxManager.hasSession()]);
 
     const setCards = sets.map((set, index) => {
-        return <Set set={set} setKey={'set-' + index} />
+        return <Set set={set} setKey={'set-' + index} key={'set-' + index} />
     })
 
     return (

@@ -122,7 +122,7 @@ function CreateSet() {
                             className='p-4 bg-primary-button rounded-lg hover:bg-primary-button/50'
                             onClick={createSet}
                         >
-                            Create Set
+                            Save Set
                         </button>
                     </div>
                 </form>
